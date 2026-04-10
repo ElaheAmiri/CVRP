@@ -26,3 +26,23 @@ class ProblemInstance:
     @property
     def total_demand(self) -> int:
         return sum(self.demands[node] for node in self.customer_nodes)
+
+
+@dataclass(frozen=True)
+class Route:
+    """Represents one vehicle route."""
+
+    vehicle_id: int
+    nodes: List[int]
+    load: int
+    distance: int
+
+
+@dataclass(frozen=True)
+class Solution:
+    """Represents a complete solution for the current instance."""
+
+    routes: List[Route]
+    total_distance: int
+    method: str
+    metadata: Dict[str, Any] = field(default_factory=dict)
