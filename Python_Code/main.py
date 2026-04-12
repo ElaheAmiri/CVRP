@@ -2,10 +2,11 @@ from __future__ import annotations
 
 import argparse
 from pathlib import Path
+import time
 
 from src.data_loader import load_problem_instance
 from src.baseline_solver import BaselineExactSolver
-from src.utils import format_route
+from src.utils import format_route, save_solution_output
 from src.validator import validate_solution
 
 
@@ -20,11 +21,24 @@ def build_parser() -> argparse.ArgumentParser:
         default=Path("data/cvrp_problem_data.json"),
         help="Path to the JSON problem instance.",
     )
+    parser.add_argument(
+        "--output-json",
+        type=Path,
+        default=Path("output.json"),
+        help="Path to save the solution JSON output.",
+    )
+    parser.add_argument(
+        "--plot-output",
+        type=Path,
+        default=Path("output_routes.svg"),
+        help="Path to save the plotted routes image.",
+    )
     return parser
 
 
 
 def main() -> None:
+    start_time = time.perf_counter()
     parser = build_parser()
     args = parser.parse_args()
 
@@ -32,6 +46,7 @@ def main() -> None:
     solver = BaselineExactSolver(instance)
     solution = solver.solve()
     validation = validate_solution(instance, solution)
+    output_json_path = save_solution_output(instance, solution, validation, args.output_json)
 
     print(f"Problem: {instance.problem_name}")
     print(f"Vehicles: {instance.vehicle_count}")
@@ -54,6 +69,8 @@ def main() -> None:
     print(f"Reported distances validated: {validation.reported_distances_match}")
     print(f"Vehicle count matches instance: {validation.vehicle_count_matches}")
     print(f"Overall solution valid: {validation.is_valid}")
+    print(f"Saved solution JSON: {output_json_path}")
+    print(f"Runtime: {time.perf_counter() - start_time:.4f} seconds")
 
 
 if __name__ == "__main__":

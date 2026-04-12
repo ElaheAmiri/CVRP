@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Tuple
 
 
 @dataclass(frozen=True)
@@ -27,6 +27,13 @@ class ProblemInstance:
     def total_demand(self) -> int:
         return sum(self.demands[node] for node in self.customer_nodes)
 
+    @property
+    def vehicle_capacity(self) -> int:
+        return self.capacity_per_vehicle
+
+    @property
+    def num_customers(self) -> int:
+        return len(self.delivery_locations)
 
 @dataclass(frozen=True)
 class Route:
@@ -40,8 +47,6 @@ class Route:
 
 @dataclass(frozen=True)
 class Solution:
-    """Represents a complete solution for the current instance."""
-
     routes: List[Route]
     total_distance: int
     method: str

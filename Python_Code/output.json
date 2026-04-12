@@ -1,0 +1,46 @@
+{
+  "problem": {
+    "name": "Capacitated Vehicle Routing Problem (CVRP)",
+    "description": "Delivery routing optimization for 20 locations with 2 trucks. Minimize total travel distance while respecting capacity constraints.",
+    "total_nodes": 21,
+    "depot": 0,
+    "vehicle_count": 2,
+    "capacity_per_vehicle": 100,
+    "constraints": {
+      "each_location_visited_exactly_once": true,
+      "vehicles_start_and_end_at_depot": true,
+      "vehicle_capacity_respected": true,
+      "minimize_total_distance": true
+    }
+  },
+  "solution": {
+    "method": "exact_baseline_partition_plus_dp",
+    "total_distance": 215,
+    "metadata": {
+      "partitions_evaluated": 101506,
+      "best_partition_mask": 275261
+    },
+    "routes": [
+      {
+        "vehicle_id": 1,
+        "nodes": [0, 5, 14, 6, 10, 9, 19, 13, 4, 3, 1, 0],
+        "load": 92,
+        "distance": 106
+      },
+      {
+        "vehicle_id": 2,
+        "nodes": [0, 11, 12, 17, 8, 7, 18, 16, 15, 20, 2, 0],
+        "load": 98,
+        "distance": 109
+      }
+    ]
+  },
+  "validation": {
+    "all_customers_visited_once": true,
+    "routes_start_end_at_depot": true,
+    "capacities_respected": true,
+    "reported_distances_match": true,
+    "vehicle_count_matches": true,
+    "is_valid": true
+  }
+}
