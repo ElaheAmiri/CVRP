@@ -93,4 +93,40 @@ void ReadWrite::readInstanceData(const std::string &strDataFile, PInstance &pIns
               << capacity << std::endl;
 }
 
+void ReadWrite::readParameters(const std::string& strParamFile, PInstance &pInstance) {
+    // open the JSON file
+    std::ifstream file(strParamFile);
+    std::cout << "Reading << " << strParamFile << " >>" << std::endl;
+
+    if (!file.is_open()) {
+        std::cout << "While trying to read the file " << strParamFile << std::endl;
+        std::cout << "The input file was not opened properly!" << std::endl;
+        throw myTools::myException("The input file was not opened properly!", __LINE__);
+    }
+
+    // Parse JSON
+    json j;
+    try {
+        file >> j;
+    } catch (const json::parse_error& e) {
+        std::cout << "JSON parse error: " << e.what() << std::endl;
+        throw myTools::myException("Failed to parse JSON file!", __LINE__);
+    }
+
+    // ==================== READ DEFAULT PARAMETERS ====================
+    auto defaultParams = j["solverParameters"];
+
+    // Default Parameters (stable parameters that rarely change)
+    int nbIter = defaultParams.value("nbIter", 10);
+    int nbColumns = defaultParams.value("nb_column", 50);
+    bool isTruncated = defaultParams.value("is_truncated", 1) != 0;
+    int maxLabel = defaultParams.value("max_label", 15);
+    float mipGap = defaultParams.value("mip_gap", 0.001f);
+
+    // ==================== CREATE PARAMETERS OBJECT ====================
+    pInstance->parameters_ = std::make_shared<Parameters>(nbIter, nbColumns, isTruncated, maxLabel,mipGap);
+
+
+    std::cout << "Parameters loaded successfully "  << std::endl;
+}
 

@@ -1,11 +1,9 @@
 {
     "solverParameters": {
         "nbIter": 10,
-        "labeling_strategy": 1,
         "nb_column": 600,
         "is_truncated": true,
         "max_label": 15,
-        "sort_path": 0,
-        "mip_gap": 0.01,
+        "mip_gap": 0.01
     }
 }

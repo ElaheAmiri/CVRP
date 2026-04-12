@@ -6,6 +6,7 @@
 #define CPP_CODE_READWRITE_H
 
 #include "utilities/types.h"
+#include "data/Parameters.h"
 
 //-----------------------------------------------------------------------------
 //  ReadWrite class
@@ -16,6 +17,7 @@ class ReadWrite {
 public:
     // Function to read instance data
     static void readInstanceData(const std::string& strDataFile, PInstance &pInstance);
+    static void readParameters(const std::string& strParamFile, PInstance &pInstance);
 };
 
 #endif //CPP_CODE_READWRITE_H

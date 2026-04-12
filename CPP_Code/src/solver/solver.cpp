@@ -13,4 +13,5 @@ void solver::createInstanceFile(const std::string &instanceDataPath, const std::
     (void)paramFilePath;
     mainInstance_ = std::make_shared<Instance>();
     ReadWrite::readInstanceData(instanceDataPath, mainInstance_);
+    ReadWrite::readParameters(paramFilePath, mainInstance_);
 }

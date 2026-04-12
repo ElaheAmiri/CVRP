@@ -17,22 +17,22 @@ Instance::Instance() {
 }
 
 
-
-
 // Display function
 std::string Instance::toString() {
     std::ostringstream repStr;
     repStr << "******************************* Instance Info *****************************" << std::endl;
     repStr << std::left;
-    repStr << "#\t" << std::setw(20) << "Number of Trucks: " << nbVehicles_ << "\n";
-    repStr << "#\t" << std::setw(20) << "Truck Capacity: " << vehicleCapacity_ << "\n";
+    repStr << "#\t" << std::setw(SET_WLENGTH) << "Number of Trucks: " << nbVehicles_ << "\n";
+    repStr << "#\t" << std::setw(SET_WLENGTH) << "Truck Capacity: " << vehicleCapacity_ << "\n";
     if (graph_) {
-        repStr << "#\t" << std::setw(20) << "Customer Nodes: " << graph_->demandNodes_.size() << "\n";
+        repStr << "#\t" << std::setw(SET_WLENGTH) << "Customer Nodes: " << graph_->demandNodes_.size() << "\n";
     }
     if (graph_ && durationMatrix_) {
         const int n = static_cast<int>(graph_->demandNodes_.size()) + 1;
-        repStr << "#\t" << std::setw(20)<< "Distance Matrix: " << n << " x " << n << "\n";
+        repStr << "#\t" << std::setw(SET_WLENGTH)<< "Distance Matrix: " << n << " x " << n << "\n";
     }
+    repStr << "------------------------- PARAMETERS AND OPTIONS ---------- ---------------" << std::endl;
+    repStr << parameters_->toString();
     repStr << "***************************************************************************" << std::endl;
     return repStr.str();
 }

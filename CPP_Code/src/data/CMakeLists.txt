@@ -2,7 +2,8 @@ set(LIB_NAME data)
 set(SOURCE_FILES
         DistanceMatrix.cpp
         Graph.cpp
-        Instance.cpp)
+        Instance.cpp
+        Parameters.cpp)
 
 add_library(${LIB_NAME} STATIC ${SOURCE_FILES})
 target_include_directories(${LIB_NAME} PUBLIC

@@ -17,6 +17,8 @@ class Graph;
 typedef std::shared_ptr<Graph> PGraph;
 class Instance;
 typedef std::shared_ptr<Instance> PInstance;
+struct Parameters;
+typedef std::shared_ptr<Parameters> PParameters;
 
 // enums
 enum NodeType { DEPART_NODE, SINK_NODE, DEMAND_NODE};
@@ -26,4 +28,6 @@ static const char *NodeTypeStr[] = {
     "DEMAND"
 };
 
+// constant values
+static const int SET_WLENGTH = 23;
 #endif //CPP_CODE_TYPES_H

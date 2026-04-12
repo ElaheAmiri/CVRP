@@ -8,6 +8,7 @@
 #include "data/DistanceMatrix.h"
 #include "data/Graph.h"
 #include "utilities/MyTools.h"
+#include "data/Parameters.h"
 
 //-----------------------------------------------------------------------------
 // Instance class
@@ -20,6 +21,7 @@ public:
     int vehicleCapacity_;                               // Capacity of vehicles
     PGraph graph_;                                      // Graph representation of the instance
     PDistanceMatrix durationMatrix_;                    // Matrix containing distance between locations
+    PParameters parameters_;                            // Parameters for solving the instance
 
 
 public:
