@@ -73,6 +73,28 @@ namespace myTools {
         }
     };
 
+
+    //-----------------------------------------------------------------------------
+    //  COUT REDIRECTOR CLASS
+    //  Define a RAII guard to manage std::cout redirection
+    //-----------------------------------------------------------------------------
+    class CoutRedirector {
+        std::ofstream logFile_;                 // Log file stream
+        std::streambuf *originalBuffer_;        // Original buffer of std::cout
+    public:
+        CoutRedirector(const std::string &logFilePath, const std::string& model)
+            : logFile_(logFilePath, std::ofstream::app),
+              originalBuffer_(std::cout.rdbuf()) {
+            logFile_ << "----------------------- " << model << " ------------------------" << std::endl;
+            std::cout.rdbuf(logFile_.rdbuf());
+        }
+        ~CoutRedirector() {
+            std::cout.rdbuf(originalBuffer_);
+        }
+
+    };
+
+
 } // namespace myTools
 
 

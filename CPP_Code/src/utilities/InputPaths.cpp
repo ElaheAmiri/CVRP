@@ -19,6 +19,7 @@ void InputPaths::initializeInputs() {
     //initialize the file names for trip records and instance data
     input_InstanceData_ = dataDir_ + "cvrp_problem_data.json";
     input_paramFile_ = dataDir_ + "cvrp_params.json";
+    output_finalLog_ = dataDir_ + "output_finalLog.txt";
 }
 
 

@@ -4,7 +4,9 @@
 
 #include "solver.h"
 
+#include <fstream>
 #include <memory>
+#include <sstream>
 #include "solver/LabelingSubProblem.h"
 #include "data/Instance.h"
 #include "utilities/ReadWrite.h"
@@ -34,19 +36,22 @@ void solver::updateReducedCosts(PInstance &pInst, std::vector<PRoute> &available
     }
 }
 
-void solver::solveCG() {
+std::string solver::solveCG() {
     // define required variables
     simulationTime_->start();
     PMasterModeler masterModel_ = std::make_shared<MP_Solver>();
     double previousObj;
     int iter = 0;
-    std::stringstream changeStr;
+    std::stringstream repStr;
     std::vector<PRoute> availableRoutes_;
 
 
 
     masterModel_->initializeModel(mainInstance_);
     masterModel_->solveModelLP(mainInstance_);
+    repStr << std::left << std::fixed << std::setprecision(1) << std::endl;
+    repStr << "Solving the CVRP problem..." << std::endl << std::endl ;
+
     while (true) {
         iter++;
         previousObj = masterModel_->lpObjValue_;
@@ -73,9 +78,10 @@ void solver::solveCG() {
         //*****************************************************************//
         //                    MASTER PROBLEM
         //*****************************************************************//
+        repStr << "LP Objective value: " << masterModel_->lpObjValue_ << std::endl;
         masterModel_->updateModel(mainInstance_);
         masterModel_->solveModelLP(mainInstance_);
-    //    std::cout << "Previous Objective: " << previousObj << " LP Objective: "  << masterModel_->lpObjValue_ << std::endl;
+
 
         if (previousObj <= masterModel_->lpObjValue_) {
             break;
@@ -83,12 +89,17 @@ void solver::solveCG() {
 
     }  // end of CG while
     masterModel_->solveModelInt(mainInstance_, routeSolution_);
+    repStr << "IP Objective value: " << masterModel_->objValue_ << std::endl;
 
     simulationTime_->stop();
-    std::cout << "Total Distance: " << masterModel_->objValue_ << std::endl;
-    std::cout << "simulation time: " << simulationTime_->dSinceInit().count() << std::endl;
-    std::cout << "#" <<  std::endl;
+    repStr << std::left << std::fixed << std::setprecision(2);
+    repStr << "***************************** Solution Results ****************************" << std::endl;
+    repStr << std::setw(SET_WLENGTH) << "Total Distance: " << masterModel_->objValue_ << std::endl;
+    repStr << std::setw(SET_WLENGTH) << "simulation time: " << simulationTime_->dSinceInit().count() << " (seconds) "<< std::endl;
+    repStr << "#" << std::endl;
+    repStr << "============================= Final Routes ================================" << std::endl;
     for (auto & routeObj : routeSolution_) {
-        std::cout << routeObj->toString(mainInstance_->durationMatrix_) << std::endl;
+        repStr << routeObj->toString(mainInstance_->durationMatrix_) << std::endl;
     }
+    return repStr.str();
 }

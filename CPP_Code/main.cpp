@@ -1,8 +1,8 @@
+#include <fstream>
 #include <iostream>
 #include <memory>
 #include <string>
 
-#include "data/Instance.h"
 #include "solver/solver.h"
 #include "utilities/InputPaths.h"
 
@@ -18,6 +18,12 @@ int main() {
     instanceSolver->createInstanceFile(inputPaths.input_InstanceData_, inputPaths.input_paramFile_);
     std::cout << instanceSolver->mainInstance_->toString();
 
-    std::cout << "Solving the CVRP problem..." << std::endl;
-    instanceSolver->solveCG();
+    // solve and save final outputs
+    const std::string finalLog = instanceSolver->solveCG();
+    std::ofstream outputFile(inputPaths.output_finalLog_);
+    if (outputFile.is_open()) {
+        outputFile << instanceSolver->mainInstance_->toString();
+        outputFile << finalLog;
+    }
+    
 }

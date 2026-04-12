@@ -34,7 +34,7 @@ public:
     void updateReducedCosts(PInstance &pInst, std::vector<PRoute> &availableRoutes);
 
     // Function to solve the CVRP problem with the CG algorithm
-    void solveCG();
+    std::string solveCG();
 };
 
 

@@ -20,6 +20,9 @@ public:
     std::string input_InstanceData_;             // instance data file
     std::string input_paramFile_;                // parameter file
 
+    // output file
+    std::string output_finalLog_;
+
     // Constructors
     explicit InputPaths(std::string datadir);    // constructor
 
