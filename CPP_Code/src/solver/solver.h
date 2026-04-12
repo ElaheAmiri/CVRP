@@ -1,0 +1,33 @@
+//
+// Created by Elahe Amiri on 2026-04-11.
+//
+
+#ifndef CPP_CODE_SOLVER_H
+#define CPP_CODE_SOLVER_H
+
+
+#include "data/Graph.h"
+#include "utilities/MyTools.h"
+#include "utilities/types.h"
+
+//-----------------------------------------------------------------------------
+//  Solver class
+//  Define the solver of the problem
+//-----------------------------------------------------------------------------
+
+class solver {
+public:
+    PInstance mainInstance_;                                // main instance of the problem
+
+
+    // Constructor and Destructor
+    solver() = default;
+    ~solver() = default;
+
+    // Function to create instance file
+    void createInstanceFile(const std::string &instanceDataPath, const std::string &paramFilePath);
+};
+
+
+
+#endif //CPP_CODE_SOLVER_H
