@@ -14,6 +14,8 @@
 Node::Node(std::string locationID, NodeType type) : type_(type),locationID_(std::move(locationID)){
     load_ = 0;
     nodeIndex_ = 0;
+    dual_ = 0.0;
+    nbActiveLabels_ = 0;
 }
 
 

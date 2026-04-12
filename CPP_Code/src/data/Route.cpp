@@ -21,6 +21,7 @@ Route::Route() : routeID_(routeCount_++) {
     strncpy(name2, std::to_string(routeID_).c_str(), 255);
     name_ = name2;
     load_ = 0;
+    reducedCost_ = 0.0;
 }
 
 Route::~Route(){

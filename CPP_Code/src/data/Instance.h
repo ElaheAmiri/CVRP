@@ -22,14 +22,13 @@ public:
     PGraph graph_;                                      // Graph representation of the instance
     PDistanceMatrix durationMatrix_;                    // Matrix containing distance between locations
     PParameters parameters_;                            // Parameters for solving the instance
+    float vehicleDual_;                                 // dual of the vehicle constraint
 
-
-public:
     // Constructors and Destructor
     Instance();
 
     // Display function to convert instance data to string format
-    std::string toString();
+    [[nodiscard]] std::string toString() const;
 
 };
 

@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.16)
 project(CPP_Code)
 
+if(POLICY CMP0167)
+    cmake_policy(SET CMP0167 NEW)
+endif()
+
 set(CMAKE_CXX_STANDARD 17)
 
 # Dynamically detect and set architecture for macOS
@@ -19,6 +23,16 @@ message(STATUS "System: ${CMAKE_SYSTEM}")
 message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 message(STATUS "Compiler version: ${CMAKE_CXX_COMPILER_VERSION}")
 
+# Boost
+find_package(Boost REQUIRED)
+
+if(Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS})
+    message(STATUS "Boost found at: ${Boost_INCLUDE_DIRS}")
+else()
+    message(FATAL_ERROR "Boost not found")
+endif()
+
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
 
@@ -26,7 +40,7 @@ add_subdirectory(src)
 
 add_executable(CVRP_main main.cpp)
 target_include_directories(CVRP_main PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
-target_link_libraries(CVRP_main PRIVATE solver utilities data)
+target_link_libraries(CVRP_main PRIVATE solver utilities data Boost::boost)
 
 # --- GoogleTest (optional) ---
 option(BUILD_CPP_TESTS "Build unit tests with GoogleTest" ON)

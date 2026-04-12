@@ -14,11 +14,12 @@ Instance::Instance() {
     vehicleCapacity_ = 0;
     graph_ = std::make_shared<Graph>();
     durationMatrix_ = std::make_shared<DistanceMatrix>();
+    vehicleDual_ = 0.0;
 }
 
 
 // Display function
-std::string Instance::toString() {
+std::string Instance::toString() const {
     std::ostringstream repStr;
     repStr << "******************************* Instance Info *****************************" << std::endl;
     repStr << std::left;

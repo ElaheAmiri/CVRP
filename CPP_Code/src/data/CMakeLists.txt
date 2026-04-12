@@ -4,7 +4,8 @@ set(SOURCE_FILES
         Graph.cpp
         Instance.cpp
         Parameters.cpp
-        Route.cpp)
+        Route.cpp
+        Label.cpp)
 
 add_library(${LIB_NAME} STATIC ${SOURCE_FILES})
 target_include_directories(${LIB_NAME} PUBLIC

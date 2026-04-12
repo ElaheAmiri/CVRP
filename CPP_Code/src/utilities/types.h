@@ -19,6 +19,10 @@ class Instance;
 typedef std::shared_ptr<Instance> PInstance;
 struct Parameters;
 typedef std::shared_ptr<Parameters> PParameters;
+class Route;
+typedef std::shared_ptr<Route> PRoute;
+class Label;
+typedef std::shared_ptr<Label> PLabel;
 
 // enums
 enum NodeType { DEPART_NODE, SINK_NODE, DEMAND_NODE};
@@ -27,6 +31,8 @@ static const char *NodeTypeStr[] = {
     "SINK   ",
     "DEMAND"
 };
+
+enum LabelStatus { ACTIVE = 0, DOMINATED = 1, INACTIVE = 2, TERMINATED = 4};
 
 // constant values
 static const int SET_WLENGTH = 23;

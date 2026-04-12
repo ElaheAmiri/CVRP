@@ -23,6 +23,10 @@ public:
     int nodeIndex_;                         // index of the node
     int load_;                              // load of the node
 
+    float dual_;
+    int nbActiveLabels_;                    // Number of active labels in labeling approach
+    std::vector<PLabel> activeLabels_;      // list of active labels
+
     // Constructor and Destructor
     Node(std::string locationID, NodeType type);
 

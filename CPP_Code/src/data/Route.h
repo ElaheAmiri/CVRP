@@ -20,6 +20,7 @@ public:
     unsigned int routeSize_;                    // size of the route (number of stops)
     std::vector<PNode> routeNodes_;             // nodes of the route
     int load_;                                  // total load of the route
+    float reducedCost_;                        // reduced cost of the route
 
 
     // Constructor and Destructor
@@ -27,13 +28,13 @@ public:
     virtual ~Route();
 
     // Getters
-    unsigned int getRouteId() const;
+    [[nodiscard]] unsigned int getRouteId() const;
 
     // these functions are used to add nodes to the routes
     void addNode(PNode &node, PDistanceMatrix& durationMatrix);
 
     // Display function
-    std::string toString(PDistanceMatrix durationMatrix) const;
+    [[nodiscard]] std::string toString(PDistanceMatrix durationMatrix) const;
 };
 
 
