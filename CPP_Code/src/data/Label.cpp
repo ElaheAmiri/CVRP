@@ -19,6 +19,7 @@ Label::Label(PNode &source, int nbNodes) : labelID_(labelCount_++) {
     elementaryCheck_.reset();
     elementaryCheck_.resize(nbNodes);
     status_ = ACTIVE;
+    LScore_ = 0.0;
 }
 
 Label::Label(const Label &label) :labelID_(labelCount_++) {
@@ -53,6 +54,7 @@ void Label::extend(Node *outNode, PDistanceMatrix& durationMatrix) {
     reducedCost_ +=  static_cast<float>(distance) - outNode->dual_;
     if (outNode->type_ == DEMAND_NODE)
         elementaryCheck_.set(outNode->nodeIndex_, true);
+    LScore_ = reducedCost_ / numVisisted_;
 }
 
 // this function check the feasibility of the label before extension

@@ -16,7 +16,7 @@ if (APPLE)
     endif()
 endif()
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR})
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 message(STATUS "System: ${CMAKE_SYSTEM}")
@@ -33,6 +33,15 @@ else()
     message(FATAL_ERROR "Boost not found")
 endif()
 
+# Google OR-Tools — see cmake/FindORTools.cmake (MODULE avoids CONFIG package name clash)
+find_package(SCIP REQUIRED)
+if(TARGET libscip AND NOT TARGET SCIP::libscip)
+    add_library(SCIP::libscip ALIAS libscip)
+endif()
+
+find_package(ortools CONFIG REQUIRED)
+
+
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
 
@@ -40,7 +49,7 @@ add_subdirectory(src)
 
 add_executable(CVRP_main main.cpp)
 target_include_directories(CVRP_main PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
-target_link_libraries(CVRP_main PRIVATE solver utilities data Boost::boost)
+target_link_libraries(CVRP_main PRIVATE solver utilities data Boost::boost ortools::ortools)
 
 # --- GoogleTest (optional) ---
 option(BUILD_CPP_TESTS "Build unit tests with GoogleTest" ON)

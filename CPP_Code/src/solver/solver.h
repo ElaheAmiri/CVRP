@@ -9,6 +9,7 @@
 #include "data/Graph.h"
 #include "utilities/MyTools.h"
 #include "utilities/types.h"
+#include "solver/MP_Solver.h"
 
 //-----------------------------------------------------------------------------
 //  Solver class
@@ -18,14 +19,17 @@
 class solver {
 public:
     PInstance mainInstance_;                                // main instance of the problem
+    myTools::Timer *simulationTime_;
+    std::vector<PRoute> routeSolution_;
 
 
     // Constructor and Destructor
-    solver() = default;
-    ~solver() = default;
+    solver();
+    ~solver();
 
     // Function to create instance file
     void createInstanceFile(const std::string &instanceDataPath, const std::string &paramFilePath);
+    void updateReducedCosts(PInstance &pInst, std::vector<PRoute> &availableRoutes);
     void solveCG();
 };
 

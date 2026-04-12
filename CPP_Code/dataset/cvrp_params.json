@@ -3,7 +3,7 @@
         "nbIter": 10,
         "nb_column": 600,
         "is_truncated": true,
-        "max_label": 2,
+        "max_label": 15,
         "mip_gap": 0.01,
         "min_capacity": 90
     }

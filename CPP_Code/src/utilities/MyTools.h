@@ -14,29 +14,66 @@
 #include "types.h"
 #include <iomanip>
 #include <memory>
+#include <chrono>
 
 //-----------------------------------------------------------------------------
 //  MyTools class
 //  Define the general tools of the project
 //-----------------------------------------------------------------------------
+using std::chrono::high_resolution_clock;
 
 namespace myTools {
 
-class myException : public std::exception {
-    std::string msg_;
+    //-----------------------------------------------------------------------------
+    //  TIMER CLASS
+    //-----------------------------------------------------------------------------
+    class Timer {
+    private:
+        high_resolution_clock::time_point cpuInit_;        // time point of the initialization of the timer
+        std::chrono::duration<double> cpuSinceStart_;      // time duration since the last start of the timer
+        std::chrono::duration<double> cpuSinceInit_;       // time duration since the initialization of the timer
 
-public:
-    myException(std::string message, int line)
-        : msg_(std::move(message) + " (line " + std::to_string(line) + ")") {}
+        int coStop_;	            //number of times the timer was stopped
+        bool isInit_;               // flag to check if the timer is initialized
+        bool isStarted_;            // flag to check if the timer is started
+        bool isStopped_;            // flag to check if the timer is stopped
 
-    const char *what() const noexcept override { return msg_.c_str(); }
-};
+        // Constructor and Destructor
+    public:
+        Timer();
+        virtual ~Timer();
+
+
+        void init();                // function fo initialize the timer
+        bool isInit() const;        // function to check initialization status
+        void start();               // function to start the timer
+        void stop();                // function to stop the timer
+        void addTime(double sec);
+
+        // get the time spent since the initialization of the timer and since the last
+        // time it was started
+        std::chrono::duration<double> dSinceInit();
+        std::chrono::duration<double> dSinceStart();
+    };
+
+    //-----------------------------------------------------------------------------
+    //  MY EXCEPTION CLASS
+    //-----------------------------------------------------------------------------
+
+    class myException : public std::exception {
+        std::string msg_;            // message of the exception
+
+    public:
+        myException(std::string message, int line)
+            : msg_(std::move(message) + " (line " + std::to_string(line) + ")") {}
+
+        const char *what() const noexcept override { return msg_.c_str(); }
+        static void throwError(const char *exceptionMsg) {
+            throwError(std::string(exceptionMsg).c_str());
+        }
+    };
 
 } // namespace myTools
-
-class MyTools {
-
-};
 
 
 

@@ -111,7 +111,7 @@ bool LabelingSubProblem::isLabelAdded(PLabel &newLabel, Node *outNode) {
 
 void LabelingSubProblem::truncateLabelList(Node *node, const PInstance &pInst) const {
     std::stable_sort(node->activeLabels_.begin(),node->activeLabels_.end(),[](const PLabel &lhs, const PLabel &rhs){
-                return lhs->reducedCost_ < rhs->reducedCost_;});
+                return lhs->LScore_ < rhs->LScore_;});
 
     for (int i = node->activeLabels_.size()-1; i >=0; i--){
         if (node->nbActiveLabels_ <= pInst->parameters_->MaxLabel_)

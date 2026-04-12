@@ -16,7 +16,8 @@ int main() {
     // create solver and load instance + parameters from JSON
     std::shared_ptr<solver> instanceSolver = std::make_shared<solver>();
     instanceSolver->createInstanceFile(inputPaths.input_InstanceData_, inputPaths.input_paramFile_);
-
     std::cout << instanceSolver->mainInstance_->toString();
+
+    std::cout << "Solving the CVRP problem..." << std::endl;
     instanceSolver->solveCG();
 }

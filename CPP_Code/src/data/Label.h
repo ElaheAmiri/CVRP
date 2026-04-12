@@ -28,6 +28,8 @@ public:
     float reducedCost_;                       // Reduced cost of the path
     boost::dynamic_bitset<> elementaryCheck_; // Checks the elementary condition of the path using a bitset
     LabelStatus status_;                      // Current status of the label (ACTIVE, DOMINATED, INACTIVE, TERMINATED)
+    float LScore_;
+
 
     // Constructor and Destructor
     Label(PNode &source, int nbNodes);        // Constructor initializing with vehicle and source node

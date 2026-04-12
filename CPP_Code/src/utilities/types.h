@@ -25,6 +25,8 @@ class Label;
 typedef std::shared_ptr<Label> PLabel;
 class LabelingSubProblem;
 typedef std::shared_ptr<LabelingSubProblem> PLabelingSubPro;
+class MP_Solver;
+typedef std::shared_ptr<MP_Solver> PMasterModeler;
 
 // enums
 enum NodeType { DEPART_NODE, SINK_NODE, DEMAND_NODE};
