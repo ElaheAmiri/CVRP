@@ -122,9 +122,11 @@ void ReadWrite::readParameters(const std::string& strParamFile, PInstance &pInst
     bool isTruncated = defaultParams.value("is_truncated", 1) != 0;
     int maxLabel = defaultParams.value("max_label", 15);
     float mipGap = defaultParams.value("mip_gap", 0.001f);
+    int minCapacity = defaultParams.value("min_capacity", 0);
 
     // ==================== CREATE PARAMETERS OBJECT ====================
-    pInstance->parameters_ = std::make_shared<Parameters>(nbIter, nbColumns, isTruncated, maxLabel,mipGap);
+    pInstance->parameters_ =
+            std::make_shared<Parameters>(nbIter, nbColumns, isTruncated, maxLabel, mipGap, minCapacity);
 
 
     std::cout << "Parameters loaded successfully "  << std::endl;

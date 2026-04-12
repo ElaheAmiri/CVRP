@@ -6,8 +6,9 @@
 
 
 // Constructor and Destructor
-Parameters::Parameters(int nbIter,  int nbColumn, bool isTruncated, int maxLabel, float MIPGap) :
-        nbIter_(nbIter), nbColumn_(nbColumn), isTruncated_(isTruncated), MaxLabel_(maxLabel), MIPGap_(MIPGap){}
+Parameters::Parameters(int nbIter, int nbColumn, bool isTruncated, int maxLabel, float MIPGap, int minCapacity) :
+        nbIter_(nbIter), nbColumn_(nbColumn), isTruncated_(isTruncated), MaxLabel_(maxLabel), MIPGap_(MIPGap),
+        minCapacity_(minCapacity) {}
 
 Parameters::~Parameters() = default;
 
@@ -20,6 +21,7 @@ std::string Parameters::toString() const {
     repStr << "#\t" << std::setw(SET_WLENGTH) << "Use Truncated Labeling " << " = " << boolToString(isTruncated_) << std::endl;
     repStr << "#\t" << std::setw(SET_WLENGTH) << "MaxLabel in Truncating " << " = " << MaxLabel_ << std::endl;
     repStr << "#\t" << std::setw(SET_WLENGTH) << "MIP Gap " << " = " << MIPGap_ << std::endl;
+    repStr << "#\t" << std::setw(SET_WLENGTH) << "Min capacity " << " = " << minCapacity_ << std::endl;
 
     return repStr.str();
 }

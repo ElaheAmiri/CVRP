@@ -18,9 +18,10 @@ public:
     bool isTruncated_{};                   // flag for using acceleration strategy
     int MaxLabel_{};                       // maximum number of labels to keep when using truncated labeling
     float MIPGap_{};                       // MIP gap for the optimization
+    int minCapacity_{};                    // minimum capacity parameter (solver)
 
     // Constructor and Destructor
-    Parameters(int nbIter,  int nbColumn, bool isTruncated, int maxLabel, float MIPGap);
+    Parameters(int nbIter, int nbColumn, bool isTruncated, int maxLabel, float MIPGap, int minCapacity);
     virtual ~Parameters();
 
     // Display functions
