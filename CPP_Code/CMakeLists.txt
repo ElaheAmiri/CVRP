@@ -27,3 +27,21 @@ add_subdirectory(src)
 add_executable(CVRP_main main.cpp)
 target_include_directories(CVRP_main PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_link_libraries(CVRP_main PRIVATE solver utilities data)
+
+# --- GoogleTest (optional) ---
+option(BUILD_CPP_TESTS "Build unit tests with GoogleTest" ON)
+
+if (BUILD_CPP_TESTS)
+    include(FetchContent)
+    FetchContent_Declare(
+            googletest
+            GIT_REPOSITORY https://github.com/google/googletest.git
+            GIT_TAG v1.15.2
+    )
+    # For MSVC: avoid overriding parent project's CRT settings
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+    FetchContent_MakeAvailable(googletest)
+
+    enable_testing()
+    add_subdirectory(tests)
+endif ()
