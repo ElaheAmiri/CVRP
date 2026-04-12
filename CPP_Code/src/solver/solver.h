@@ -29,7 +29,11 @@ public:
 
     // Function to create instance file
     void createInstanceFile(const std::string &instanceDataPath, const std::string &paramFilePath);
+
+    // Function to update the reduced costs of the available routes
     void updateReducedCosts(PInstance &pInst, std::vector<PRoute> &availableRoutes);
+
+    // Function to solve the CVRP problem with the CG algorithm
     void solveCG();
 };
 
