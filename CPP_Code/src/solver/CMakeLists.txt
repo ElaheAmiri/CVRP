@@ -1,6 +1,7 @@
 set(LIB_NAME solver)
 set(SOURCE_FILES
-        solver.cpp)
+        solver.cpp
+        LabelingSubProblem.cpp)
 
 add_library(${LIB_NAME} STATIC ${SOURCE_FILES})
 target_include_directories(${LIB_NAME} PUBLIC

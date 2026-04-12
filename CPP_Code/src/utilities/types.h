@@ -23,6 +23,8 @@ class Route;
 typedef std::shared_ptr<Route> PRoute;
 class Label;
 typedef std::shared_ptr<Label> PLabel;
+class LabelingSubProblem;
+typedef std::shared_ptr<LabelingSubProblem> PLabelingSubPro;
 
 // enums
 enum NodeType { DEPART_NODE, SINK_NODE, DEMAND_NODE};

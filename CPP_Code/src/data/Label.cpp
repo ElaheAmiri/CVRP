@@ -15,7 +15,7 @@ Label::Label(PNode &source, int nbNodes) : labelID_(labelCount_++) {
     totalDistance_ = 0;
     numVisisted_ = 0;
     pathNode_.push_back(source.get());
-    reducedCost_ = 0;
+    reducedCost_ = 0.0;
     elementaryCheck_.reset();
     elementaryCheck_.resize(nbNodes);
     status_ = ACTIVE;

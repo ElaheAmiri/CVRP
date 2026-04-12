@@ -14,7 +14,7 @@
 Node::Node(std::string locationID, NodeType type) : type_(type),locationID_(std::move(locationID)){
     load_ = 0;
     nodeIndex_ = 0;
-    dual_ = 0.0;
+    dual_ = 50.0;
     nbActiveLabels_ = 0;
 }
 
@@ -50,4 +50,11 @@ void Graph::addNewNode(const PNode &node) {
             departNode_ = node;
             break;
     }
+}
+
+void Graph::resetGraph() {
+    for (auto & nodeObj: demandNodes_) {
+        nodeObj->activeLabels_.clear();
+    }
+    sink_->activeLabels_.clear();
 }

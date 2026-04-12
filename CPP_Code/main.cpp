@@ -18,5 +18,5 @@ int main() {
     instanceSolver->createInstanceFile(inputPaths.input_InstanceData_, inputPaths.input_paramFile_);
 
     std::cout << instanceSolver->mainInstance_->toString();
-
+    instanceSolver->solveCG();
 }

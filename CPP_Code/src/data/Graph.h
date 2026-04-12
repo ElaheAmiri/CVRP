@@ -52,6 +52,9 @@ public:
     // function for adding node to graph
     void addNewNode(const PNode &node);
 
+    // function to reset the graph after each SP
+    void resetGraph();
+
 };
 
 

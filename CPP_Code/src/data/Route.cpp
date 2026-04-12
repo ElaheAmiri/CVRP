@@ -50,17 +50,16 @@ std::string Route::toString(PDistanceMatrix durationMatrix) const {
     repStr << "#\t" << std::setw(SET_WLENGTH) << "- Route Size" << " : " << routeSize_ << std::endl;
     repStr << "#\t" << std::setw(SET_WLENGTH) << "- Distance" << " : " << totalDistance_ << std::endl;
     repStr << "#\t" << std::setw(SET_WLENGTH) << "- Load" << " : " << load_ << std::endl;
-    repStr << "#" << std::endl;
-
-    repStr << "# ------------------------------------------------------------------------------------------------------------------------------------------------------" << std::endl;
+    repStr << "#\t" << std::setw(SET_WLENGTH) << "- Reduced Cost" << " : " << reducedCost_ << std::endl;
+    repStr << "# ----------------------------------------------------------------------------" << std::endl;
     repStr << std::left << std::setw(6) << "#   ";
-    repStr << std::left << std::setw(15) << " Node Type";
-    repStr << std::left << std::setw(12) << " Location ID";
+    repStr << std::left << std::setw(13) << " Node Type";
+    repStr << std::left << std::setw(6) << " Location ID";
     repStr << std::right << std::setw(10) << "Node IDX";
     repStr << std::right << std::setw(12) << " Node Load";
-    repStr << std::right << std::setw(14) << " Cum. Load";
-    repStr << std::right << std::setw(14) << " Cum. Disct";
-    repStr << "# ------------------------------------------------------------------------------------------------------------------------------------------------------" << std::endl;
+    repStr << std::right << std::setw(12) << " Cum. Load";
+    repStr << std::right << std::setw(12) << " Cum. Dist" << std::endl;
+    repStr << "# ----------------------------------------------------------------------------" << std::endl;
 
     int cumLoad = 0;
     int cumDist = 0;
@@ -73,19 +72,19 @@ std::string Route::toString(PDistanceMatrix durationMatrix) const {
         repStr << "#" << std::setw(4) << (i + 1) << "  ";
 
         if (n->type_ == DEPART_NODE) {
-            repStr << std::left << std::setw(15) << "(SOURCE )";
+            repStr << std::left << std::setw(16) << "(SOURCE )";
         } else if (n->type_ == SINK_NODE) {
-            repStr << std::left << std::setw(15) << "(SINK   )";
+            repStr << std::left << std::setw(16) << "(SINK   )";
         } else
-            repStr << std::left << std::setw(15) << "(DEMAND )";
+            repStr << std::left << std::setw(16) << "(DEMAND )";
 
-        repStr << std::left << std::setw(12) << n->locationID_;
-        repStr << std::right << std::setw(10) << n->nodeIndex_;
+        repStr << std::left << std::setw(6) << n->locationID_;
+        repStr << std::right << std::setw(8) << n->nodeIndex_;
         repStr << std::right << std::setw(12) << n->load_;
-        repStr << std::right << std::setw(14) << cumLoad;
-        repStr << std::right << std::setw(14) << cumDist;
+        repStr << std::right << std::setw(12) << cumLoad;
+        repStr << std::right << std::setw(12) << cumDist << std::endl;
     }
-    repStr << "========================================================================================================================================================" << std::endl;
+    repStr << "==============================================================================" << std::endl;
     return repStr.str();
 }
 

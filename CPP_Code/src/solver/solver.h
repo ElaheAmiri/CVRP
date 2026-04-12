@@ -26,6 +26,7 @@ public:
 
     // Function to create instance file
     void createInstanceFile(const std::string &instanceDataPath, const std::string &paramFilePath);
+    void solveCG();
 };
 
 
