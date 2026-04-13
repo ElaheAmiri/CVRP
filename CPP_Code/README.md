@@ -152,12 +152,11 @@ The code also exports LP/MPS model snapshots such as `ortools_orig.lp` and `orto
 
 ## Design Decisions and Assumptions
 
-- The implementation is aimed at **practical performance** rather than full exactness.
-- A dynamic-programming-based labeling algorithm is used in the pricing step because it can generate multiple useful columns for the master problem.
-- Since the vehicles are homogeneous, the pricing subproblem only needs to be solved once per iteration to generate a sufficient pool of candidate routes.
-- This choice also makes it easier to handle richer routing constraints while producing naturally integer route paths.
-- The main limitation is scalability, since the number of labels can grow rapidly on larger instances.
-- To address that trade-off, the method is combined with heuristic acceleration to keep the solution process practical and flexible.
+- The implementation prioritizes **practical performance** over full exactness.
+- Because the vehicles are homogeneous, the pricing subproblem is solved once per iteration to generate a sufficient route pool.
+- This design supports richer routing constraints that can be added as resources to the labeling.
+- Truncated labeling is used to accelerate the process and was sufficient here, while the framework remains flexible enough to incorporate other heuristics.
+- To support initial feasibility, auxiliary penalty variables allow nodes to remain temporarily under-covered.
 
 ## Future Improvements
 
@@ -165,4 +164,4 @@ Possible next steps for the project include:
 
 - adding benchmark instances beyond the current 20-customer dataset
 - reporting detailed iteration statistics
-- improving route stabilization and pricing heuristics
+- improving pricing heuristics
