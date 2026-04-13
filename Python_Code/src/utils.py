@@ -22,6 +22,79 @@ def format_route(route: Iterable[int]) -> str:
     return " -> ".join(map(str, route))
 
 
+def print_route_details(instance: ProblemInstance, route_id: int, route_nodes: List[int]) -> None:
+    cumulative_load = 0
+    cumulative_distance = 0
+
+    print("# ----------------------------------------------------------------------------")
+    print(f"#\t- Route ID              : {route_id}")
+    print(f"#\t- Route Size            : {len(route_nodes)}")
+    print(f"#\t- Distance              : {route_distance(route_nodes, instance.distance_matrix)}")
+    print(f"#\t- Load                  : {route_load(route_nodes, instance.demands, instance.depot)}")
+    print("# ----------------------------------------------------------------------------")
+    print("#     Node Type    Location ID  Node IDX   Node Load   Cum. Load   Cum. Dist")
+    print("# ----------------------------------------------------------------------------")
+
+    for stop_index, node in enumerate(route_nodes, start=1):
+        if stop_index == 1:
+            node_type = "(SOURCE)"
+            node_idx = instance.depot
+            node_load = 0
+        elif stop_index == len(route_nodes):
+            node_type = "( SINK )"
+            node_idx = instance.total_nodes
+            node_load = 0
+        else:
+            node_type = "(DEMAND)"
+            node_idx = node
+            node_load = instance.demands[node]
+            cumulative_load += node_load
+
+        if stop_index > 1:
+            previous_node = route_nodes[stop_index - 2]
+            cumulative_distance += instance.distance_matrix[previous_node][node]
+
+        print(
+            f"# {stop_index:>3}  {node_type:<8}  "
+            f"{node:>11}  {node_idx:>8}  {node_load:>10}  "
+            f"{cumulative_load:>10}  {cumulative_distance:>10}"
+        )
+
+    print("==============================================================================")
+    print()
+
+
+def print_solution_summary(
+    instance: ProblemInstance,
+    solution: Solution,
+    validation: ValidationSummary,
+    output_json_path: str | Path,
+    runtime_seconds: float,
+) -> None:
+    print(f"Problem: {instance.problem_name}")
+    print(f"Vehicles: {instance.vehicle_count}")
+    print(f"Capacity per vehicle: {instance.capacity_per_vehicle}")
+    print(f"Customers: {len(instance.customer_nodes)}")
+    print(f"Method: {solution.method}")
+    print(f"Feasible partitions evaluated: {solution.metadata['partitions_evaluated']}")
+    print()
+
+    print("============================= Final Routes ================================")
+    for route in solution.routes:
+        print_route_details(instance, route.vehicle_id, route.nodes)
+
+    print(f"Total distance: {solution.total_distance}")
+    print(f"Runtime: {runtime_seconds:.4f} seconds")
+    print()
+    print(f"All customers visited exactly once: {validation.all_customers_visited_once}")
+    print(f"Routes start/end at depot: {validation.routes_start_end_at_depot}")
+    print(f"Capacity constraints respected: {validation.capacities_respected}")
+    print(f"Reported distances validated: {validation.reported_distances_match}")
+    print(f"Vehicle count matches instance: {validation.vehicle_count_matches}")
+    print(f"Overall solution valid: {validation.is_valid}")
+
+
+
 def _compute_node_positions(
     distance_matrix: List[List[int]],
     depot: int = 0,
