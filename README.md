@@ -9,4 +9,27 @@ The project is organized around two main components:
 
 In other words, the Python implementation serves as the **ground-truth baseline for comparison**, while the C++ implementation serves as the **optimization framework based on column generation**.
 
+## Repository Structure
+
+```text
+CVRP/
+├── README.md
+├── Python_Code/
+│   ├── README.md
+│   ├── main.py
+│   ├── requirements.txt
+│   ├── data/
+│   └── src/
+└── CPP_Code/
+    ├── README.md
+    ├── CMakeLists.txt
+    ├── main.cpp
+    ├── dataset/
+    ├── src/
+    ├── tests/
+    └── bin/
+```
+
+The top-level repository connects these two implementations: `Python_Code/` contains the exact comparison baseline, while `CPP_Code/` contains the column-generation framework and its supporting solver components.
+
 See the README inside each folder for the full method description, project structure, build or run instructions, and implementation details for that version.

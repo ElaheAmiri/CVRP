@@ -1,2 +1,2 @@
-networkx
-numpy
+# No third-party packages required; the baseline uses the Python standard library only.
+# Use Python 3.10 or newer (for modern typing syntax used in the repo).

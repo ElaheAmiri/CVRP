@@ -166,3 +166,4 @@ Possible next steps for the project include:
 - adding benchmark instances beyond the current 20-customer dataset
 - reporting detailed iteration statistics
 - improving pricing heuristics
+- consider and initial feasible solution by a fast insertion heuristic 
