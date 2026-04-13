@@ -52,6 +52,7 @@ To build this project, you need:
 ## Quick Start
 
 ### 1. Configure and build
+From the `CPP_Code` directory:
 
 ```bash
 mkdir -p build
