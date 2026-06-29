@@ -1,0 +1,74 @@
+name: build-and-test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  cpp:
+    name: C++ (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, macos-latest]
+    env:
+      # Google OR-Tools (bundles SCIP and the other supported MIP/LP solvers).
+      ORTOOLS_VERSION: v9.15
+      ORTOOLS_BUILD: 9.15.6755
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake build-essential libboost-all-dev
+          # Prebuilt OR-Tools C++ archive ships its own bundled SCIP + CMake config.
+          tarball="or-tools_amd64_ubuntu-22.04_cpp_${ORTOOLS_BUILD}.tar.gz"
+          curl -fL -o ortools.tar.gz \
+            "https://github.com/google/or-tools/releases/download/${ORTOOLS_VERSION}/${tarball}"
+          mkdir -p "${HOME}/or-tools"
+          tar -xzf ortools.tar.gz -C "${HOME}/or-tools" --strip-components=1
+          # Expose OR-Tools to CMake and the runtime linker for later steps.
+          echo "ORTOOLS_ROOT=${HOME}/or-tools" >> "${GITHUB_ENV}"
+          echo "CMAKE_PREFIX_PATH=${HOME}/or-tools" >> "${GITHUB_ENV}"
+          echo "LD_LIBRARY_PATH=${HOME}/or-tools/lib:${LD_LIBRARY_PATH}" >> "${GITHUB_ENV}"
+
+      - name: Install dependencies (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          brew update
+          # Homebrew's or-tools pulls in SCIP as a dependency.
+          brew install cmake boost or-tools
+
+      - name: Configure
+        run: cmake -S cpp -B cpp/build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build cpp/build --config Release -j
+
+      - name: Test (ctest)
+        run: ctest --test-dir cpp/build --output-on-failure
+
+  python:
+    name: Python baseline
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install requirements
+        run: pip install -r python/requirements.txt
+
+      - name: Run baseline solver
+        working-directory: python
+        run: python main.py

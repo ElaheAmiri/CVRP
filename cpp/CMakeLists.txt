@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(CPP_Code)
+project(CVRP CXX)
 
 if(POLICY CMP0167)
     cmake_policy(SET CMP0167 NEW)
@@ -33,13 +33,10 @@ else()
     message(FATAL_ERROR "Boost not found")
 endif()
 
-# Google OR-Tools — see cmake/FindORTools.cmake (MODULE avoids CONFIG package name clash)
-find_package(SCIP REQUIRED)
-if(TARGET libscip AND NOT TARGET SCIP::libscip)
-    add_library(SCIP::libscip ALIAS libscip)
-endif()
-
-find_package(ortools CONFIG REQUIRED)
+# Google OR-Tools (bundles/depends on SCIP). The discovery details — including
+# the SCIP::libscip target alias some distributions need — live in the
+# MODULE-mode finder cmake/FindORTools.cmake, which exposes ortools::ortools.
+find_package(ORTools REQUIRED)
 
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
