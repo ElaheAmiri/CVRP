@@ -81,8 +81,7 @@ std::string solver::solveCG() {
         repStr << "LP Objective value: " << masterModel_->lpObjValue_ << std::endl;
         masterModel_->updateModel(mainInstance_);
         masterModel_->solveModelLP(mainInstance_);
-
-
+        std::cout << "IP Objective value: " << masterModel_->lpObjValue_ << std::endl;
         if (previousObj <= masterModel_->lpObjValue_) {
             break;
         }

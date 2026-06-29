@@ -1,6 +1,6 @@
 {
     "solverParameters": {
-        "nbIter": 10,
+        "nbIter": 100,
         "nb_column": 600,
         "is_truncated": true,
         "max_label": 15,
