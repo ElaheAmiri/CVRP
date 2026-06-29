@@ -17,8 +17,10 @@ The solution process follows a standard decomposition pattern:
 ## Project Structure
 
 ```text
-CPP_Code/
+cpp/
 ├── CMakeLists.txt              # Top-level build configuration
+├── cmake/
+│   └── FindORTools.cmake       # Locates Google OR-Tools (+ bundled SCIP)
 ├── main.cpp                    # Program entry point
 ├── dataset/
 │   ├── cvrp_problem_data.json  # CVRP instance data
@@ -52,7 +54,7 @@ To build this project, you need:
 ## Quick Start
 
 ### 1. Configure and build
-From the `CPP_Code` directory:
+From the `cpp` directory:
 
 ```bash
 mkdir -p build
@@ -65,7 +67,7 @@ The main executable is written to `bin/CVRP_main`.
 
 ### 2. Run the solver
 
-From the `CPP_Code` directory:
+From the `cpp` directory:
 
 ```bash
 ./bin/CVRP_main

@@ -39,3 +39,30 @@
 
 # debug information files
 *.dwo
+*.DS_Store
+*.xml
+*.iml
+*.idx
+*.pyc
+*.rst
+
+# IDE / editor
+.idea/
+.vscode/
+
+# CMake build directories
+build/
+cmake-build-*/
+.cache/
+
+# C++ build outputs
+cpp/bin/
+cpp/lib/
+
+# Python
+.venv/
+__pycache__/
+
+# OR-Tools solver dumps
+ortools_orig.lp
+ortools_orig.mps

@@ -6,7 +6,7 @@ Although this method provide exact solution, it is **not practically scalable** 
 ## Repository structure
 
 ```text
-Python_Code/
+python/
   README.md
   requirements.txt
   data/
