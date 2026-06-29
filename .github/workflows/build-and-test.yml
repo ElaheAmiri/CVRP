@@ -16,8 +16,11 @@ jobs:
         os: [ubuntu-22.04, macos-latest]
     env:
       # Google OR-Tools (bundles SCIP and the other supported MIP/LP solvers).
-      ORTOOLS_VERSION: v9.15
-      ORTOOLS_BUILD: 9.15.6755
+      # ORTOOLS_RELEASE is the git release tag (used in the download path);
+      # ORTOOLS_PKG_VERSION is the full version string embedded in the asset
+      # filename, e.g. or-tools_amd64_ubuntu-22.04_cpp_v9.15.6755.tar.gz.
+      ORTOOLS_RELEASE: v9.15
+      ORTOOLS_PKG_VERSION: v9.15.6755
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,9 +31,10 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y cmake build-essential libboost-all-dev
           # Prebuilt OR-Tools C++ archive ships its own bundled SCIP + CMake config.
-          tarball="or-tools_amd64_ubuntu-22.04_cpp_${ORTOOLS_BUILD}.tar.gz"
-          curl -fL -o ortools.tar.gz \
-            "https://github.com/google/or-tools/releases/download/${ORTOOLS_VERSION}/${tarball}"
+          tarball="or-tools_amd64_ubuntu-22.04_cpp_${ORTOOLS_PKG_VERSION}.tar.gz"
+          url="https://github.com/google/or-tools/releases/download/${ORTOOLS_RELEASE}/${tarball}"
+          echo "Downloading ${url}"
+          curl --fail --location --retry 3 --retry-delay 5 -o ortools.tar.gz "${url}"
           mkdir -p "${HOME}/or-tools"
           tar -xzf ortools.tar.gz -C "${HOME}/or-tools" --strip-components=1
           # Expose OR-Tools to CMake and the runtime linker for later steps.
