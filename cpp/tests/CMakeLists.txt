@@ -3,7 +3,7 @@ add_executable(cvrp_tests
         route_test.cpp
         label_test.cpp)
 
-target_include_directories(cvrp_tests PRIVATE ${CMAKE_SOURCE_DIR}/src)
+target_include_directories(cvrp_tests PRIVATE ${PROJECT_SOURCE_DIR}/src)
 target_link_libraries(cvrp_tests PRIVATE GTest::gtest_main data Boost::boost)
 
 include(GoogleTest)
