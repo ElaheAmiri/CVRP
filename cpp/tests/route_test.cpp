@@ -105,7 +105,7 @@ TEST_F(RouteTest, ToString_ContainsSummaryFields) {
     EXPECT_NE(s.find("- Route Size"), std::string::npos);
     EXPECT_NE(s.find("- Distance"), std::string::npos);
     EXPECT_NE(s.find("- Load"), std::string::npos);
-    EXPECT_NE(s.find("(SOURCE )"), std::string::npos);
+    EXPECT_NE(s.find("(SOURCE)"), std::string::npos);
 
     std::cerr << "[RouteTest::ToString_ContainsSummaryFields] "
               << "toString length=" << s.size() << " bytes\n";

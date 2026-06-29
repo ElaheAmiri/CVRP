@@ -73,7 +73,7 @@ bool Label::isExtendFeasible(Node *outNode, int capacity) const {
 
 bool Label::isDominated(PLabel &otherLabel) const {
 
-    if (this->reducedCost_ >= otherLabel->reducedCost_) {
+    if (this->reducedCost_ > otherLabel->reducedCost_) {
         if (this->numVisisted_ >= otherLabel->numVisisted_) {
             if (this->load_ >= otherLabel->load_) {
                 if ((otherLabel->elementaryCheck_ & this->elementaryCheck_) == otherLabel->elementaryCheck_) {
